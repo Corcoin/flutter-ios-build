@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_ios:
-    runs-on: macos-latest
+    runs-on: macos-11  # Force Intel runner for compatibility
 
     steps:
       - name: Checkout code
@@ -17,6 +17,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 'stable'
+          architecture: 'x64'  # Use x64 architecture explicitly
+
+      - name: Flutter doctor
+        run: flutter doctor -v
 
       - name: Install dependencies
         run: flutter pub get
@@ -39,7 +43,3 @@ jobs:
           name: Runner.ipa
           path: build/ios/Runner.ipa
           if-no-files-found: error
-          retention-days: 7
-          compression-level: 6
-          overwrite: true
-          include-hidden-files: false
