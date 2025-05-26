@@ -29,11 +29,11 @@ jobs:
           mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r Runner.ipa Payload
-          ls -lh Runner.ipa
+          mv Runner.ipa ../Runner.ipa
+          ls -lh ../Runner.ipa
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: Runner.ipa
-          path: build/ios/iphoneos/Runner.ipa
-
+          path: build/ios/Runner.ipa
