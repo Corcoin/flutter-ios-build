@@ -16,17 +16,19 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.1'  # Pin Flutter version explicitly here
+          flutter-version: '3.22.1'
 
       - name: Install dependencies
+        working-directory: red/webview_browser
         run: flutter pub get
 
       - name: Build iOS release (no signing)
+        working-directory: red/webview_browser
         run: flutter build ios --no-codesign
 
       - name: Package IPA
         run: |
-          cd build/ios/iphoneos
+          cd red/webview_browser/build/ios/iphoneos
           mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r Runner.ipa Payload
@@ -37,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v4.6.2
         with:
           name: Runner.ipa
-          path: build/ios/Runner.ipa
+          path: red/webview_browser/build/ios/Runner.ipa
           if-no-files-found: error
           retention-days: 7
           compression-level: 6
