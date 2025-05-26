@@ -33,10 +33,13 @@ jobs:
           mv Runner.ipa ../Runner.ipa
           ls -lh ../Runner.ipa
 
-      - name: Upload IPA artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: Runner.ipa
           path: build/ios/Runner.ipa
           if-no-files-found: error
-
+          retention-days: 7
+          compression-level: 6
+          overwrite: true
+          include-hidden-files: false
