@@ -16,13 +16,15 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'stable'
+          flutter-version: '3.22.1'    # Use exact version to avoid arm64 detection issues
+          channel: stable
+          architecture: x64            # Avoid arm64 issues on GitHub Actions
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build iOS release (no code signing)
-        run: flutter build ios --no-codesign
+        run: flutter build ios --release --no-codesign
 
       - name: Create IPA
         run: |
@@ -30,8 +32,8 @@ jobs:
           mkdir -p Payload
           cp -r Runner.app Payload/
           zip -r Runner.ipa Payload
-          mv Runner.ipa ../Runner.ipa
-          ls -lh ../Runner.ipa
+          mv Runner.ipa ../../Runner.ipa
+          ls -lh ../../Runner.ipa
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4.6.2
