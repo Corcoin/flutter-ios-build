@@ -8,6 +8,7 @@ on:
 jobs:
   build_ios:
     runs-on: macos-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,7 +34,10 @@ jobs:
           ls -lh ../Runner.ipa
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: Runner.ipa
           path: build/ios/Runner.ipa
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
